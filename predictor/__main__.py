@@ -12,7 +12,7 @@ import time
 import csv
 import os
 
-look_back = 7
+look_back = 5
 
 def main():
     max_error_val = 0.00025
@@ -21,9 +21,9 @@ def main():
     batch_size_limit_exceeded_times = 0
 
     model = Sequential()
-    model.add(LSTM(units=200,
+    model.add(LSTM(units=50,
                    return_sequences=True))
-    model.add(LSTM(units=200,
+    model.add(LSTM(units=50,
                    return_sequences=False))
     model.add(Dense(1))
     # model.add(Activation('sigmoid'))
