@@ -12,24 +12,23 @@ import time
 import csv
 import os
 
+look_back = 7
 
 def main():
-    pass
-    look_back = 20
     max_error_val = 0.0002
     initial_batch_size = 10
     initial_epochs_amount = 10
     batch_size_limit_exceeded_times = 0
 
     model = Sequential()
-    model.add(LSTM(units=100,
+    model.add(LSTM(units=200,
                    return_sequences=True))
-    model.add(LSTM(units=100,
+    model.add(LSTM(units=200,
                    return_sequences=False))
     model.add(Dense(1))
     # model.add(Activation('sigmoid'))
     model.add(LeakyReLU())
-    model.compile(loss="mean_squared_error", optimizer=Adam(lr=0.00001))
+    model.compile(loss="mean_squared_error", optimizer=Adam(lr=0.00005))
 
     raw_data = []
 
@@ -202,7 +201,8 @@ def plot(filename, train_data, x_test_data, y_test_data, max_data_val, model):
 
     plt.plot(
         range(
-            len(plt_train_data), len(plt_train_data) + len(plt_test_predict)),
+            len(plt_train_data),
+            len(plt_train_data) + len(plt_test_predict)),
         plt_test_predict, 'r--')
 
     dirname = os.path.join('.', 'models', filename)
@@ -249,13 +249,14 @@ def plot2(filename, train_data, x_test_data, y_test_data, max_data_val, model):
 
     plt.plot(
         range(
-            len(plt_train_data), len(plt_train_data) + len(plt_test_predict)),
+            len(plt_train_data),
+            len(plt_train_data) + len(plt_test_predict)),
         plt_test_predict, 'y--')
 
     test_data_start = x_test_data[0]
 
     test_predict = []
-    for i in range(0, 50):
+    for i in range(0, 5):
 
         one_predict = model.predict(np.array([test_data_start]))
 
@@ -269,7 +270,92 @@ def plot2(filename, train_data, x_test_data, y_test_data, max_data_val, model):
 
     plt.plot(
         range(
-            len(plt_train_data), len(plt_train_data) + len(plt_test_predict)),
+            len(plt_train_data),
+            len(plt_train_data) + len(plt_test_predict)),
+        plt_test_predict, 'g--')
+
+    test_data_start = x_test_data[40]
+
+    test_predict = []
+    for i in range(0, 10):
+
+        one_predict = model.predict(np.array([test_data_start]))
+
+        test_predict.append(one_predict[0][0])
+
+        test_data_start = np.hstack([test_data_start, one_predict])
+
+        test_data_start = np.array([test_data_start[0, :][1:]])
+
+    plt_test_predict = np.array(test_predict) * max_data_val
+
+    plt.plot(
+        range(
+            len(plt_train_data) + 40,
+            len(plt_train_data) + len(plt_test_predict) + 40),
+        plt_test_predict, 'y--')
+
+    test_data_start = x_test_data[40]
+
+    test_predict = []
+    for i in range(0, 5):
+
+        one_predict = model.predict(np.array([test_data_start]))
+
+        test_predict.append(one_predict[0][0])
+
+        test_data_start = np.hstack([test_data_start, one_predict])
+
+        test_data_start = np.array([test_data_start[0, :][1:]])
+
+    plt_test_predict = np.array(test_predict) * max_data_val
+
+    plt.plot(
+        range(
+            len(plt_train_data) + 40,
+            len(plt_train_data) + len(plt_test_predict) + 40),
+        plt_test_predict, 'g--')
+
+    test_data_start = x_test_data[80]
+
+    test_predict = []
+    for i in range(0, 10):
+
+        one_predict = model.predict(np.array([test_data_start]))
+
+        test_predict.append(one_predict[0][0])
+
+        test_data_start = np.hstack([test_data_start, one_predict])
+
+        test_data_start = np.array([test_data_start[0, :][1:]])
+
+    plt_test_predict = np.array(test_predict) * max_data_val
+
+    plt.plot(
+        range(
+            len(plt_train_data) + 80,
+            len(plt_train_data) + len(plt_test_predict) + 80),
+        plt_test_predict, 'y--')
+
+    test_data_start = x_test_data[80]
+
+    test_predict = []
+    for i in range(0, 5):
+
+        one_predict = model.predict(np.array([test_data_start]))
+
+        test_predict.append(one_predict[0][0])
+
+        test_data_start = np.hstack([test_data_start, one_predict])
+
+        test_data_start = np.array([test_data_start[0, :][1:]])
+
+    plt_test_predict = np.array(test_predict) * max_data_val
+
+    plt.plot(
+        range(
+            len(plt_train_data) + 80,
+            len(plt_train_data) + len(plt_test_predict) + 80),
         plt_test_predict, 'g--')
 
     dirname = os.path.join('.', 'models', filename)
