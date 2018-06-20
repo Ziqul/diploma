@@ -15,7 +15,7 @@ import os
 look_back = 7
 
 def main():
-    max_error_val = 0.0002
+    max_error_val = 0.00025
     initial_batch_size = 10
     initial_epochs_amount = 10
     batch_size_limit_exceeded_times = 0
@@ -32,7 +32,7 @@ def main():
 
     raw_data = []
 
-    with open('data/exchange-rate-of-australian-doll.csv') as csvfile:
+    with open('data/exchange-rate-twi-may-1970-aug-1.csv') as csvfile:
         spamreader = csv.reader(csvfile)
         for row in spamreader:
             raw_data.append(float(row[0]))
@@ -111,6 +111,9 @@ def main():
                 model.set_weights(pre_fit_weights)
 
                 epochs_amount *= 2
+
+                if epochs_amount > 1280:
+                    epochs_amount = 1280
 
                 # Error not going down - we can make batch bigger
                 if batch_size < len(x_train):
