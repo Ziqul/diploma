@@ -12,18 +12,18 @@ import time
 import csv
 import os
 
-look_back = 5
+look_back = 7
 
 def main():
-    max_error_val = 0.00025
+    max_error_val = 0.00002
     initial_batch_size = 10
     initial_epochs_amount = 10
     batch_size_limit_exceeded_times = 0
 
     model = Sequential()
-    model.add(LSTM(units=50,
+    model.add(LSTM(units=100,
                    return_sequences=True))
-    model.add(LSTM(units=50,
+    model.add(LSTM(units=100,
                    return_sequences=False))
     model.add(Dense(1))
     # model.add(Activation('sigmoid'))
@@ -32,7 +32,7 @@ def main():
 
     raw_data = []
 
-    with open('data/exchange-rate-twi-may-1970-aug-1.csv') as csvfile:
+    with open('data/co2-ppm-mauna-loa-19651980.csv') as csvfile:
         spamreader = csv.reader(csvfile)
         for row in spamreader:
             raw_data.append(float(row[0]))
